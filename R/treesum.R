@@ -26,7 +26,7 @@
 #' and \code{depth} 0.
 #' }
 #' @export treesum
-#' @author Dan Murphy
+#' @author Daniel Murphy
 #' @examples
 #' LLV <- list(LA = list(PY = 100:101, CY = 200:201), UL = 10:11)
 #' treesum(LLV, d = 0)
