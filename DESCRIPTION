@@ -1,0 +1,12 @@
+Package: listcondense
+Title: list sum vectorized
+Version: 0.1
+Authors@R: "Dan Murphy <danielmarkmurphy@gmail.com>  [aut, cre]"
+Description: Aggregate (sum) the condensed branches of a tree (list) lower than
+    a given depth.
+Depends:
+    R (>= 3.1.1)
+License: GPL (>= 2)
+LazyData: true
+Suggests:
+    testthat

@@ -1,0 +1,40 @@
+#' tree sum 
+#' 
+#' Aggregate (sum) the condensed branches of a tree lower than a given depth.
+#'
+#' @param x a \code{list} holding the represenation of the tree
+#' @param depth depth at which all branches and their sub-branches 
+#' ("branch families") will be aggregated
+#' @details
+#' All leaves of the tree must be \code{numeric} vectors of identical length.
+#' The depth of the top (alternatively, root) of the tree 
+#' is considered to be zero.
+#' @return The value returned depends on \code{depth}:
+#' \tabular{cl}{
+#' \code{  depth  } \tab value\cr
+#' 0 \tab a \code{numeric} vector holding the sum of all vectors in the tree.
+#' Similar to \code{sum(unlist(x))} but without "flattening" the leaf vectors.
+#' Implemented as \code{rowSums(M)} where the columns of matrix M 
+#' hold the vectors stored at the leaves of every branch. \cr
+#' > 0 \tab a \code{list} representing a condensed tree. 
+#' If \code{depth} is greater than or equal to the length of the longest branch 
+#' of tree \code{x},
+#' the list returned is identical to \code{x}.
+#' Otherwise, the value of the vector at the leaf of each branch is the sum
+#' of the vectors below that branch, 
+#' as though \code{treesum} had been called directly with that node of \code{x}
+#' and \code{depth} 0.
+#' }
+#' @export treesum
+#' @author Dan Murphy
+#' @examples
+#' LLV <- list(LA = list(PY = 100:101, CY = 200:201), UL = 10:11)
+#' treesum(LLV, d = 0)
+#' treesum(LLV, d = 1)
+#' identical(treesum(LLV, d = 2), LLV)
+treesum <- function(x, depth = 0) {
+  if (!is.list(x)) x
+  else
+  if (depth > 0) lapply(x, treesum, depth - 1)
+  else rowSums(do.call(cbind, lapply(x, treesum, depth)))
+}
